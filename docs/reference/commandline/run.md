@@ -583,6 +583,16 @@ fdisk: unable to open /dev/xvdc: Operation not permitted
 > that may be removed should not be added to untrusted containers with
 > `--device`.
 
+For Windows, the format of the string passed to the `--device` option is slightly different from Linux. The string is the form of `--device="<IdType>/<Id>"`. Today, Windows only supports the IdType as `class` and the Id as a [device interface class GUID](https://docs.microsoft.com/en-us/windows-hardware/drivers/install/overview-of-device-interface-classes). For a list of container-supported device interface class GUIDs, please refer to the table defined in the [Windows container docs](https://docs.microsoft.com/en-us/virtualization/windowscontainers/deploy-containers/hardware-devices-in-containers).
+
+When this option is specified for a process-isolated Windows container, _all_ devices which implement the requested device interface class GUID will be made available in the container.
+
+```powershell
+PS C:\> docker run --device="class/86E0D1E0-8089-11D0-9CE4-08003E301F73" mcr.microsoft.com/windows/servercore:ltsc2019 
+```
+> **Note**: `--device` may only be used on Windows with process-isolated Windows containers. This option will fail if the container
+> isolation is `hyperv`. Windows does not support exposing host devices to Linux Containers on Windows (LCOW) either.
+
 ### Restart policies (--restart)
 
 Use Docker's `--restart` to specify a container's *restart policy*. A restart
