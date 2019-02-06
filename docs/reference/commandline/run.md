@@ -588,7 +588,7 @@ For Windows, the format of the string passed to the `--device` option is in the 
 When this option is specified for a process-isolated Windows container, _all_ devices which implement the requested device interface class GUID will be made available in the container. For example, the command below will make all COM ports on the host visibile in the container.
 
 ```powershell
-PS C:\> docker run --device="class/86E0D1E0-8089-11D0-9CE4-08003E301F73" mcr.microsoft.com/windows/servercore:ltsc2019 
+PS C:\> docker run --device=class/86E0D1E0-8089-11D0-9CE4-08003E301F73 mcr.microsoft.com/windows/servercore:ltsc2019 
 ```
 
 > **Note**: `--device` may only be used on Windows with process-isolated Windows containers. This option will fail if the container
